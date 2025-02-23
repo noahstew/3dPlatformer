@@ -5,8 +5,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody playerBody; // player Rigidbody
     [SerializeField] private float playerSpeed = 4f; // Movement speed
     [SerializeField] private float jumpForce = 10f; // Jump force
-    private bool isGrounded = false; // Grounded state
+    [SerializeField] private float maxSpeed = 10f; // Max speed by player
     [SerializeField] private Transform cameraRotation;
+    private bool isGrounded = false; // Grounded state
 
     // Detect collision when landing
     private void OnCollisionEnter(Collision collision)
@@ -42,7 +43,9 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDirection = (cameraForward * input.z + cameraRight * input.x).normalized; // Rotated position
 
-        playerBody.AddForce(moveDirection * playerSpeed); // Moving player
+        // Move the player with a capped speed
+        Vector3 clampedDirection = Vector3.ClampMagnitude(moveDirection * playerSpeed, maxSpeed);
+        playerBody.AddForce(clampedDirection);
 
         if (input.y > 0 && isGrounded) // Jump check
         {
