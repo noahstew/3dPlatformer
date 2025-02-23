@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7875315028506235406}
   m_Layer: 0
   m_Name: Coin
-  m_TagString: Untagged
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,6 +83,10 @@ PrefabInstance:
     - target: {fileID: 7818949798074937701, guid: 6d234b6816398f341a9197c06c250f89, type: 3}
       propertyPath: m_Name
       value: Collectable_Gem_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 7818949798074937701, guid: 6d234b6816398f341a9197c06c250f89, type: 3}
+      propertyPath: m_TagString
+      value: Coin
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

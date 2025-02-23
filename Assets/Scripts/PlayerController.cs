@@ -3,6 +3,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    [SerializeField] private GameObject GameManager; // Game Manager
     [SerializeField] private Rigidbody playerRB; // Player Rigidbody
     [SerializeField] private float playerSpeed = 4f; // Movement speed
     [SerializeField] private float jumpForce = 10f; // Jump force
@@ -14,6 +15,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground")) // Detects if ground is touched
         {
             isGrounded = true;
+        }
+
+        if (collision.gameObject.CompareTag("Coin")) // Detects if obstacle is touched
+        {
+            GameManager.GetComponent<GameManager>().IncrementScore(); // Increment score
+            Destroy(collision.gameObject); // Destroy obstacle
         }
     }
 
@@ -41,4 +48,6 @@ public class PlayerController : MonoBehaviour
             playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Instant velocity change in Y direction
         }
     }
+
+
 }
