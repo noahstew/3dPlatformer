@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float playerSpeed = 4f; // Movement speed
     [SerializeField] private float jumpForce = 10f; // Jump force
     private bool isGrounded = false; // Grounded state
+    [SerializeField] private Transform cameraRotation;
 
     // Detect collision when landing
     private void OnCollisionEnter(Collision collision)
@@ -28,7 +29,19 @@ public class PlayerController : MonoBehaviour
     // Move the player
     public void movePlayer(Vector3 input)
     {
-        Vector3 moveDirection = new Vector3(input.x, 0, input.z); // Vector 3 representation of input
+        // Get camera's forward and right vectors
+        Vector3 cameraForward = cameraRotation.forward;
+        Vector3 cameraRight = cameraRotation.right;
+
+        // Ignore vertical rotation
+        cameraForward.y = 0f;
+        cameraRight.y = 0f;
+
+        cameraForward.Normalize();
+        cameraRight.Normalize();
+
+        Vector3 moveDirection = (cameraForward * input.z + cameraRight * input.x).normalized; // Rotated position
+
         playerBody.AddForce(moveDirection * playerSpeed); // Moving player
 
         if (input.y > 0 && isGrounded) // Jump check
