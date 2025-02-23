@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody playerRB; // Player Rigidbody
     [SerializeField] private float playerSpeed = 4f; // Movement speed
     [SerializeField] private float jumpForce = 10f; // Jump force
+
+    private bool isDoubleJump = false; // Double jump state
     private bool isGrounded = false; // Grounded state
 
     // Detect collision when landing
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground")) // Detects if ground is touched
         {
             isGrounded = true;
+            isDoubleJump = false; // Reset double jump state
         }
 
         if (collision.gameObject.CompareTag("Coin")) // Detects if obstacle is touched
@@ -46,6 +49,11 @@ public class PlayerController : MonoBehaviour
         if (input.y > 0 && isGrounded) // Jump check
         {
             playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Instant velocity change in Y direction
+        }
+        else if (input.y > 0 && !isGrounded && !isDoubleJump) // Double jump check
+        {
+            playerRB.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); // Instant velocity change in Y direction
+            isDoubleJump = true; // Double jump state
         }
     }
 
