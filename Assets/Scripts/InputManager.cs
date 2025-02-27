@@ -5,7 +5,7 @@ public class InputManager : MonoBehaviour
 {
     // Changed to Vector 3 to support jump 
     public UnityEvent<Vector3> OnMove = new UnityEvent<Vector3>();
-
+    public UnityEvent OnDash = new UnityEvent();
     void Update()
     {
         // Zeroing input
@@ -39,6 +39,12 @@ public class InputManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             inputVector += Vector3.up;
+        }
+
+        // Dash
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            OnDash?.Invoke();
         }
 
         // Invoking Ball Controller
